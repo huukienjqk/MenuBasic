@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Menu Minh Đức - Aim FOV</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #000, #111);
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      overflow: hidden;
+    }
+    .menu-frame {
+      width: 100vw;
+      height: 100vh;
+      border: 6px solid red;
+      border-radius: 16px;
+      padding: 20px;
+      box-sizing: border-box;
+      position: relative;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.85);
+    }
+    .logo {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 5px solid white;
+      margin-bottom: 10px;
+      object-fit: cover;
+      box-shadow: 0 0 25px red;
+    }
+    h1 {
+      font-size: 48px;
+      background: linear-gradient(to right, red, cyan);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 2px 2px 8px white;
+    }
+    label {
+      display: block;
+      margin: 15px auto;
+      padding: 16px;
+      width: 85%;
+      background: #222;
+      border-radius: 12px;
+      font-size: 24px;
+      box-shadow: 0 0 12px red;
+    }
+    input[type="checkbox"] {
+      transform: scale(1.5);
+      margin-right: 10px;
+    }
+    .slider-container {
+      width: 85%;
+      margin: 20px auto;
+      background: #222;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px cyan;
+    }
+    .slider-container input {
+      width: 100%;
+    }
+    .apply-button {
+      padding: 20px 40px;
+      font-size: 24px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(to right, red, blue);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 16px red;
+    }
+    .output {
+      width: 85%;
+      margin: 20px auto;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid #999;
+      padding: 15px;
+      border-radius: 12px;
+      font-family: monospace;
+      height: 140px;
+      overflow-y: auto;
+      box-shadow: inset 0 0 8px rgba(255,255,255,0.1);
+    }
+    .note {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #ffcccc;
+      line-height: 1.5;
+    }
+    footer {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+      color: #ccc;
+    }
+    .fire {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: orange;
+      border-radius: 50%;
+      animation: fire 2.5s linear forwards;
+    }
+    @keyframes fire {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-150px) scale(0.3); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="menu-frame">
+    <img src="https://i.imgur.com/3Z1Z0gL.png" alt="Logo Minh Đức" class="logo">
+    <h1>MINH ĐỨC</h1>
+
+    <label><input type="checkbox" value="Regedit" data-url="https://www.mediafire.com/file/abc123/keotam.reg">⚙️ Regedit</label>
+    <label><input type="checkbox" value="Aimlock 90%" data-url="https://www.mediafire.com/file/def456/aim.json">🎯 Aimlock 90%</label>
+    <label><input type="checkbox" value="Fix Rung" data-url="https://www.mediafire.com/file/fix/fixrung.plist">🔧 Fix Rung</label>
+    <label><input type="checkbox" value="Buff Nhạy" data-url="https://www.mediafire.com/file/buff/buffnhay.json">🚀 Buff Nhạy</label>
+
+    <div class="slider-container">
+      <label for="fovSlider">🎯 AIM FOV: <span id="fovValue">50</span>%</label>
+      <input type="range" min="0" max="100" value="50" id="fovSlider" oninput="document.getElementById('fovValue').innerText=this.value">
+    </div>
+
+    <button class="apply-button" onclick="apply()">💾 Áp dụng chức năng</button>
+    <div class="output" id="output">🔘 Chọn chức năng để bắt đầu.</div>
+
+    <div class="note">
+      ⚠️ Lưu ý:<br>
+      - Vào game trước mới bật chức năng, nếu không sẽ không tác dụng.<br>
+      - Menu chỉ hỗ trợ **kéo tâm**, không phải phần mềm thứ 3.<br>
+      - Không can thiệp hệ thống game, không gây khoá acc.
+    </div>
+
+    <footer>Bản quyền từ TikTok: @mducformen</footer>
+  </div>
+
+  <script>
+    function apply() {
+      let selected = document.querySelectorAll('input[type="checkbox"]:checked');
+      let output = document.getElementById("output");
+      let fov = document.getElementById("fovSlider").value;
+      if (selected.length === 0) {
+        output.innerText = "⚠️ Vui lòng chọn ít nhất 1 chức năng.";
+        return;
+      }
+      let result = "🎮 Đang áp dụng:\n";
+      selected.forEach(item => {
+        result += `✅ ${item.value}\n`;
+      });
+      result += `🎯 AIM FOV đang đặt: ${fov}%\n⏳ Đang xử lý...`;
+      output.innerText = result;
+
+      setTimeout(() => {
+        output.innerText += "\n✅ Đã hoàn tất! File sẽ tự động mở.";
+        selected.forEach(item => {
+          window.open(item.getAttribute("data-url"), "_blank");
+        });
+      }, 4000);
+    }
+
+    // Hiệu ứng lửa
+    setInterval(() => {
+      for (let i = 0; i < 20; i++) {
+        let fire = document.createElement("div");
+        fire.className = "fire";
+        fire.style.left = Math.random() * window.innerWidth + "px";
+        fire.style.top = Math.random() * window.innerHeight + "px";
+        fire.style.background = Math.random() > 0.5 ? "red" : "orange";
+        document.body.appendChild(fire);
+        setTimeout(() => fire.remove(), 2500);
+      }
+    }, 150);
+<script>
+  let html = atob("PHdoYX......g=="); // đoạn mã base64 ở đây
+  document.write(html);
+</script>
+  </script>
+</body>
+</html>
